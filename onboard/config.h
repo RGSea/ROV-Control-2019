@@ -6,8 +6,8 @@
 #define BAUDRATE		115200
 
 // motors
-#define MIN_MICROS    	1064                                                // minimum ESC pulse length
-#define MAX_MICROS    	1864                                                // maximum ESC pulse length
+#define MIN_MICROS		1064
+#define MAX_MICROS		1864
 #define NEUTRAL_MICROS	1464 
 #define PIN_FL_H		0
 #define PIN_FR_H		0
