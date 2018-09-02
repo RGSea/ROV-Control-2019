@@ -10,6 +10,6 @@ of code which are yet to be integrated to the main programs.
 
 # Current Goals
 - Implement control input from controller (Tim)
-- Produce mathematical model for control algorithm and implement as code (unassigned)
+- Produce mathematical model for control algorithm and implement as code (Fraser)
 - Produce hardware and software for a simple information display / menu (unassigned)
 - Write a simple test program for ESCs to check they all work (unassigned)
