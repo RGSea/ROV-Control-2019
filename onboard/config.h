@@ -9,14 +9,14 @@
 #define MIN_MICROS		1064
 #define MAX_MICROS		1864
 #define NEUTRAL_MICROS	1464 
-#define PIN_FL_H		0
-#define PIN_FR_H		0
-#define PIN_BL_H		0
-#define PIN_BR_H		0
-#define PIN_FL_V		0
-#define PIN_FR_V		0
-#define PIN_BL_V		0
-#define PIN_BR_V		0
+#define PIN_FL_H		2
+#define PIN_FR_H		3
+#define PIN_BL_H		4
+#define PIN_BR_H		5
+#define PIN_FL_V		6
+#define PIN_FR_V		7
+#define PIN_BL_V		8
+#define PIN_BR_V		9
 
 // motor index numbers
 #define INDEX_FL_H		0

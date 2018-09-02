@@ -26,6 +26,7 @@ void setup() {
 
 	initComms();
 	initESCs();
+  
 	
 }
 
@@ -34,6 +35,11 @@ void setup() {
 void loop() {
 
 	recvData();
-	writeToESCs();
+	//writeToESCs();
+  FL_H.write(motorSpeeds[1]);
+	
+
+
+	// working pins:
 
 }
