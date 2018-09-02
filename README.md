@@ -8,4 +8,7 @@ programs in the onboard and surface folders are called upon by the corresponding
 code is organised and each area is kept seperate. Use the development folder to keep and work on new modules 
 of code which are yet to be integrated to the main programs.
 
-#
+# Current Goals
+- Implement control input (T.B.)
+- Produce mathematical model for control algorithm and implement as code (unassigned)
+- Produce hardware and software for a simple information display / menu (unassigned)
