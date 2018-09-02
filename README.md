@@ -10,6 +10,9 @@ of code which are yet to be integrated to the main programs.
 
 Log any changes to the main program in the changelog.
 
+# Project Management
+Please use the project tab to view to do list and progress
+
 # Current Goals
 - Implement control input from controller (Tim)
 - Produce mathematical model for control algorithm and implement as code (Fraser)
