@@ -12,12 +12,3 @@ Log any changes to the main program in the changelog.
 
 # Project Management
 Please use the project tab to view to do list and progress
-
-# Current Goals
-- Implement control input from controller (Tim)
-- Produce mathematical model for control algorithm and implement as code (Fraser)
-- Produce hardware and software for a simple information display / menu (unassigned)
-
-# Completed Goals
-- Implement communications protocol between onboard and surface microcontrollers
-- Write a simple test program for ESCs to check they all work
