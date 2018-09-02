@@ -9,6 +9,7 @@ code is organised and each area is kept seperate. Use the development folder to 
 of code which are yet to be integrated to the main programs.
 
 # Current Goals
-- Implement control input (T.B.)
+- Implement control input from controller (Tim)
 - Produce mathematical model for control algorithm and implement as code (unassigned)
 - Produce hardware and software for a simple information display / menu (unassigned)
+- Write a simple test program for ESCs to check they all work (unassigned)
