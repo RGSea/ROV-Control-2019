@@ -12,4 +12,7 @@ of code which are yet to be integrated to the main programs.
 - Implement control input from controller (Tim)
 - Produce mathematical model for control algorithm and implement as code (Fraser)
 - Produce hardware and software for a simple information display / menu (unassigned)
-- Write a simple test program for ESCs to check they all work (unassigned)
+
+# Completed Goals
+- Implement communications protocol between onboard and surface microcontrollers
+- Write a simple test program for ESCs to check they all work
