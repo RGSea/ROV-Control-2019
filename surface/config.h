@@ -14,3 +14,8 @@
 #define INDEX_FR_V		5
 #define INDEX_BL_V		6
 #define INDEX_BR_V		7
+
+// control input
+#define DEADZONE    10 
+#define AXIS_MIN    -32767
+#define AXIS_MAX    32767

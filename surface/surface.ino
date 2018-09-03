@@ -4,8 +4,17 @@
 // library includes
 #include "config.h"
 
+#include <XBOXUSB.h>
+#ifdef dobogusinclude
+#include <spi4teensy3.h>
+#endif
+#include <SPI.h>
+USB Usb;
+XBOXUSB Xbox(&Usb);
+
 // global variables
 int motorSpeeds[8] = {10,50,30,40,50,60,70,80};
+int Lx, Ly, Rx, Ry, LT, RT;
 
 
 // initialisation

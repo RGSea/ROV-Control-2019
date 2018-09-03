@@ -47,7 +47,7 @@ void sendData(int motorSpeeds[8]) {
 	
 	// format and send data
 	formatData(motorSpeeds, &formattedData);
-	Serial.println(formattedData);
+	//Serial.println(formattedData);
 	Serial1.print(formattedData);
 	Serial1.print('\n');
 
