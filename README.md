@@ -11,4 +11,4 @@ of code which are yet to be integrated to the main programs.
 Log any changes to the main program in the changelog.
 
 # Project Management
-Please use the project tab to view to do list and progress
+Please use the project tab to view to do list and progress.
