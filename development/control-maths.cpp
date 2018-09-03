@@ -37,10 +37,14 @@ Axes:
 	Ry - axis - right joystick y coordinate - this axis controls pitch
 	L2 - axis - left single axis trigger value - this axis controls altitude, used to descend
 	R2 - axis - right single axis trigger value - this axis controls altitude, used to climb
+	LB - axis - upper left single axis trigger - this axis controls yaw to the left
+	RB - axis - upper right single axis trigger - this axis controls yaw to the right
 
 Buttons:
-	L1 - left button
-	R1 - right button
+	LT - left button
+	RT - right button
+	LB - left upper button
+	RB - right upper button
 	U  - up button on d-pad
 	D  - down button on d-pad
 	L  - left button on d-pad
@@ -62,7 +66,7 @@ Data:
 
 
 // merge vertical controls
-int alt = R2 - L2;
+int alt = RT - LT;
 int roll = Rx;
 int pitch = Ry;
 
@@ -73,6 +77,12 @@ int speedBL_V = alt + roll + pitch;
 int speedBR_V = alt - roll + pitch;
 
 
+// translation speeds (yaw to be added), 
+
+int speedFR_H = Lx - Ly;
+int speedFL_H = (-Ly - Lx)/2;
+int speedBR_H = (Lx + Ly)/2 ;
+int speedBL_H = Ly - Lx ;
 
 
 
