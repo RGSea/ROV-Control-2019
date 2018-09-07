@@ -1,9 +1,8 @@
 // ROV Control 2019 - Surface
-// Version 1, August
+// Version 1, August-September
 
 // library includes
 #include "config.h"
-
 #include <XBOXUSB.h>
 #ifdef dobogusinclude
 #include <spi4teensy3.h>
@@ -13,7 +12,7 @@ USB Usb;
 XBOXUSB Xbox(&Usb);
 
 // global variables
-int motorSpeeds[8] = {10,50,30,40,50,60,70,80};
+int motorSpeeds[8] = {0,0,0,0,0,0,0,0};
 int Lx, Ly, Rx, Ry, LT, RT;
 
 
@@ -30,11 +29,7 @@ void setup() {
 void loop() {
 
 	fetchControlInput();
-	//calcMotorSpeeds();
-  for(int i = 0; i < 8; i++) {
-    motorSpeeds[i] = 10 * i;
-  }
-  motorSpeeds[1] = 80;
+	calcMotorSpeeds();
 	sendData(motorSpeeds);
 
 }

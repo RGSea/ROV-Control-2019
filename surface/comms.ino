@@ -52,6 +52,4 @@ void sendData(int motorSpeeds[8]) {
 	Serial1.print('\n');
 
 
-	delay(100);
-
 }

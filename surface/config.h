@@ -3,7 +3,7 @@
 
 // serial comms
 #define BAUDRATE		115200
-#define PACKET_SIZE		0
+//#define PACKET_SIZE		0
 
 // motor index numbers
 #define INDEX_FL_H		0
@@ -16,6 +16,12 @@
 #define INDEX_BR_V		7
 
 // control input
-#define DEADZONE    10 
+#define DEADZONE    15
 #define AXIS_MIN    -32767
 #define AXIS_MAX    32767
+
+
+
+// debug
+//
+#define DEBUG_VERTICAL_MOTOR_SPEEDS
