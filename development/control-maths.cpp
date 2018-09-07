@@ -77,12 +77,7 @@ int speedBL_V = alt + roll + pitch;
 int speedBR_V = alt - roll + pitch;
 
 
-// translation speeds (yaw to be added), 
 
-int speedFR_H = Lx - Ly;
-int speedFL_H = (-Ly - Lx)/2;
-int speedBR_H = (Lx + Ly)/2 ;
-int speedBL_H = Ly - Lx ;
 
 
 
