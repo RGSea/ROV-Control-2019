@@ -19,7 +19,7 @@
 #define DEADZONE    15
 #define AXIS_MIN    -32767
 #define AXIS_MAX    32767
-#define ROOT2       1.4
+#define ROOT2       1.4142
 #define YAWRATE     10
 
 // debug

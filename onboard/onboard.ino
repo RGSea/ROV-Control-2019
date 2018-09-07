@@ -34,6 +34,6 @@ void setup() {
 void loop() {
 
 	recvData();
-	//writeToESCs();
+	writeToESCs();
 
 }
