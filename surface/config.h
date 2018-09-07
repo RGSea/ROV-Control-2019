@@ -19,9 +19,8 @@
 #define DEADZONE    15
 #define AXIS_MIN    -32767
 #define AXIS_MAX    32767
-
-
+#define ROOT2       1.4
+#define YAWRATE     10
 
 // debug
-//
-#define DEBUG_VERTICAL_MOTOR_SPEEDS
+//#define DEBUG_VERTICAL_MOTOR_SPEEDS
