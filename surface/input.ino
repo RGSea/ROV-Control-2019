@@ -37,7 +37,7 @@ int mapAxis(int axis) {
   return axis;
 }
 
-void deadzoneCheck(int16_t *axis) {
+void deadzoneCheck(int *axis) {
   if(*axis < DEADZONE && *axis > -DEADZONE) {
     *axis = 0;
   }
