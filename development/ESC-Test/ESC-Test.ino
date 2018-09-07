@@ -11,11 +11,11 @@ Servo ESC;
 
 #define BAUDRATE        115200
 #define POT_PIN         5
-#define ESC_PIN         6
+#define ESC_PIN         12
 #define MIN_MICROS      1064
 #define MAX_MICROS      1864
 #define NEUTRAL_MICROS  1464 
-#define SPEED_LIMIT     0.1
+#define SPEED_LIMIT     0.5
 
 
 void setup() {
