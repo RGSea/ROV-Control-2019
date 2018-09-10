@@ -29,7 +29,7 @@ void calcMotorSpeeds() {
   checkSpeedRange(&motorSpeeds[INDEX_BL_V]);
   checkSpeedRange(&motorSpeeds[INDEX_BR_V]);
 
-
+/*
   Serial.print("\t");
   Serial.print(motorSpeeds[INDEX_FL_H]);
   Serial.print("\t");
@@ -38,7 +38,7 @@ void calcMotorSpeeds() {
   Serial.print(motorSpeeds[INDEX_BL_H]);
   Serial.print("\t");
   Serial.println(motorSpeeds[INDEX_BR_H]);
-
+*/
 
 
 	// print motor speeds if debug
