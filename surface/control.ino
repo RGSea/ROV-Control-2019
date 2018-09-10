@@ -6,6 +6,7 @@ void calcMotorSpeeds() {
 	int altitude = RT - LT;
 	int pitch = Ry;
 	int roll = Rx;
+  int inPut = sqrt((Lx*Lx)+(Ly*Ly))
 
 	// calculate vertical motor speeds
 	motorSpeeds[INDEX_FL_V] = altitude - pitch + roll;
@@ -14,10 +15,10 @@ void calcMotorSpeeds() {
 	motorSpeeds[INDEX_BR_V] = altitude + pitch - roll;
 
 	// calculate horizontal motor speeds
-  motorSpeeds[INDEX_FR_H] = ( (ROOT2/2) * (Lx-Ly) ) / 0.7 + (YAWRATE * RB) - (YAWRATE * LB);
-  motorSpeeds[INDEX_FL_H] = ( (ROOT2/2) * (-Lx-Ly)) / 0.7 - (YAWRATE * RB) + (YAWRATE * LB);
-  motorSpeeds[INDEX_BR_H] = ( (ROOT2/2) * (Lx+Ly) ) / 0.7 - (YAWRATE * RB) + (YAWRATE * LB);
-  motorSpeeds[INDEX_BL_H] = (-(ROOT2/2) * (Lx-Ly) ) / 0.7 + (YAWRATE * RB) - (YAWRATE * LB);
+  motorSpeeds[INDEX_FR_H] = ( inPut * (Lx-Ly) ) / (Lx + Ly) + (YAWRATE * RB) - (YAWRATE * LB);
+  motorSpeeds[INDEX_FL_H] = ( inPut * (-Lx-Ly)) / (Lx + Ly) - (YAWRATE * RB) + (YAWRATE * LB);
+  motorSpeeds[INDEX_BR_H] = ( inPut * (Lx+Ly) ) / (Lx + Ly) - (YAWRATE * RB) + (YAWRATE * LB);
+  motorSpeeds[INDEX_BL_H] = ( inPut * (Ly-Lx) ) / (Lx + Ly) + (YAWRATE * RB) - (YAWRATE * LB);
 
   // verify speeds are in range (some will not be)
   checkSpeedRange(&motorSpeeds[INDEX_FL_H]);
