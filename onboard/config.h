@@ -11,11 +11,11 @@
 #define NEUTRAL_MICROS	1464 
 
 // motor pin numbers
-#define PIN_FL_H        6
-#define PIN_FR_H        7
-#define PIN_BL_H        8
-#define PIN_BR_H        9
-#define PIN_FL_V        10
+#define PIN_FL_H        6  //8
+#define PIN_FR_H        7  //7
+#define PIN_BL_H        8  //6
+#define PIN_BR_H        9  //5
+#define PIN_FL_V        10 
 #define PIN_FR_V        11
 #define PIN_BL_V        12
 #define PIN_BR_V        13
