@@ -1,3 +1,5 @@
+#ifdef RUN_COMMS
+
 // communications code
 
 void initComms() {
@@ -53,3 +55,5 @@ void sendData(int motorSpeeds[8]) {
 
 
 }
+
+#endif

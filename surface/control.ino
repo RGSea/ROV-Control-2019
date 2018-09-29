@@ -6,7 +6,7 @@ void calcMotorSpeeds() {
 	int altitude = RT - LT;
 	int pitch = Ry;
 	int roll = Rx;
-  int inPut = sqrt((Lx*Lx)+(Ly*Ly))
+  int inPut = sqrt((Lx*Lx)+(Ly*Ly));
 
 	// calculate vertical motor speeds
 	motorSpeeds[INDEX_FL_V] = altitude - pitch + roll;

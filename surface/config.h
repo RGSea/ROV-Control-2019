@@ -21,6 +21,12 @@
 #define AXIS_MAX    32767
 #define ROOT2       1.4142
 #define YAWRATE     10
+#define MAX_GAIN_VAL 100
+
+// pins
+#define ENCODER_PIN_1	2		// must be interrupt capable
+#define ENCODER_PIN_2	3		// must be interrupt capable
+#define SWITCH_PIN    4   // DDR needs to be input pullup
 
 // debug
 //#define DEBUG_VERTICAL_MOTOR_SPEEDS
