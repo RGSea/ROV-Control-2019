@@ -1,5 +1,5 @@
 // ROV Control 2019 - Surface
-// Version 1, August-September
+// Version 3.14159263535897932
 
 // library includes
 #include "config.h"
@@ -35,12 +35,24 @@ double gainVals[8] = {1.2, 1, 1, 1, 1, 1, 1, 1};
 
 // initialisation
 void setup() {
-  
-	Serial.begin(BAUDRATE);
+
+  // initialise serial comms
+  initComms();
+
+  // set pin registers
   pinMode(SWITCH_PIN, INPUT_PULLUP);
 
-	//initComms();
-	//initControlInput();
+  // initialise additional code
+	initControlInput();
+
+ #ifdef CALIBRATE_MOTORS
+    calibrateMotors();
+ #endif
+
+  resetMotorSpeeds();
+  calcMotorSpeeds();
+  sendData(motorSpeeds);
+  delay(5000);
 
 }
 
@@ -50,20 +62,19 @@ void loop() {
 
 
   // control code
-  
-	//fetchControlInput();
-	//calcMotorSpeeds(); 
-	//sendData(motorSpeeds);
+	fetchControlInput();
+	calcMotorSpeeds();
+	sendData(motorSpeeds);
+
+
 
 
   // encoder code
-  
+  /*
   switchState = digitalRead(SWITCH_PIN);
   //Serial.println(switchState);
 
 	long newEncoderPos = encoder.read();
-
-
 
 
   if (newEncoderPos != oldEncoderPos) {
@@ -72,7 +83,7 @@ void loop() {
     oldEncoderPos = newEncoderPos;
   }
 
-  //Serial.println(gainVals[INDEX_YAW_GAIN]);
+  //Serial.println(gainVals[INDEX_YAW_GAIN]);*/
   
 
 

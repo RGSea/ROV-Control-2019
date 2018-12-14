@@ -15,7 +15,7 @@ Servo ESC;
 #define MIN_MICROS      1064
 #define MAX_MICROS      1864
 #define NEUTRAL_MICROS  1464 
-#define SPEED_LIMIT     0.5
+#define SPEED_LIMIT     1.00
 
 
 void setup() {

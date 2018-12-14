@@ -1,4 +1,4 @@
-#ifdef RUN_COMMS
+
 
 // communications code
 
@@ -46,6 +46,8 @@ void sendData(int motorSpeeds[8]) {
 
 	// local variables
 	String formattedData = "i000000000000000000000000";
+
+
 	
 	// format and send data
 	formatData(motorSpeeds, &formattedData);
@@ -56,4 +58,4 @@ void sendData(int motorSpeeds[8]) {
 
 }
 
-#endif
+

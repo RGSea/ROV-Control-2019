@@ -33,7 +33,7 @@ void setup() {
 // main loop
 void loop() {
 
-	recvData();
+	//recvData();
 	writeToESCs();
 
 }

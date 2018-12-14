@@ -1,6 +1,6 @@
 // debug
 //#define DEBUG_MOTOR_SPEEDS
-#define DEBUG_COMMS
+//#define DEBUG_COMMS
 
 // serial comms
 #define BAUDRATE		    115200
