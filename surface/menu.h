@@ -6,23 +6,6 @@
 #include "config.h"
 
 
-uint8_t updateGain(double *gainVal, int change) {
-
-	Serial.println(*gainVal);
-
-	*gainVal += (change * 0.1);
-
-	if(*gainVal < 0) {
-		*gainVal = 0;
-	}
-	if(*gainVal > MAX_GAIN_VAL) {
-		*gainVal = MAX_GAIN_VAL;
-	}
-
-	return 0;
-}
-
-
 
 
 

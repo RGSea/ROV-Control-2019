@@ -1,6 +1,7 @@
 // debug
 //#define DEBUG_MOTOR_SPEEDS
 //#define DEBUG_COMMS
+#define PRINT_TEMP_VAL
 
 // serial comms
 #define BAUDRATE		    115200
@@ -15,10 +16,18 @@
 #define PIN_FR_H        7  //7
 #define PIN_BL_H        8  //6
 #define PIN_BR_H        9  //5
-#define PIN_FL_V        10 
+#define PIN_FL_V        10
 #define PIN_FR_V        11
 #define PIN_BL_V        12
 #define PIN_BR_V        13
+
+// electromagnet pin numbers
+#define PIN_MAG_TEE_1	A0
+#define PIN_MAG_TEE_2	A1
+#define PIN_MAG_TEE_3	A2
+#define PIN_MAG_TEE_4	A3
+#define PIN_MAG_FISH	A4
+#define PIN_MAG_METAL	A5
 
 // motor index numbers
 #define INDEX_FL_H		  0
@@ -29,3 +38,6 @@
 #define INDEX_FR_V		  5
 #define INDEX_BL_V		  6
 #define INDEX_BR_V		  7
+
+// temperature sensor
+#define ONE_WIRE_BUS  2

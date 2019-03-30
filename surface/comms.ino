@@ -10,12 +10,12 @@ void initComms() {
 
 void formatData(int motorSpeeds[8], String *formattedData) {
 
-	// shift zero position of motor speeds
+	// shift zero position of motor speeds up by 100
 	for(int i = 0; i < 8; i++) {
 		motorSpeeds[i] += 100;
 	}
 
-	// format data
+	// format data into string + initialiser (ixxxyyyzzzjjjkkkrrr ...)
 	*formattedData = "i";
 	for(int i = 0; i < 8; i++) {
 		*formattedData += intToString(motorSpeeds[i]);
@@ -46,8 +46,6 @@ void sendData(int motorSpeeds[8]) {
 
 	// local variables
 	String formattedData = "i000000000000000000000000";
-
-
 	
 	// format and send data
 	formatData(motorSpeeds, &formattedData);

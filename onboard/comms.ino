@@ -40,22 +40,14 @@ void formatData() {
 
 	// crop initialiser bit from string
 	dataIn = dataIn.substring(1);
-  Serial.println(dataIn);
 
-  
-  //char buffer[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-  //dataIn.toCharArray(buffer, 24);
-
-	// split data into substrings and update motor speeds
-	//motorSpeeds[0] = dataIn.substring(0,0).toInt();
-  //Serial.println(dataIn);
-	
-	
-	/*int index;
+	int index;
 	for(int i = 0; i < 8; i++) {
 		index = i * 3;
 		motorSpeeds[i] = dataIn.substring(index, index + 3).toInt() - 100;
-	}*/
+    //Serial.println(motorSpeeds[i]);
+	}
+
 
 
 	// debug code

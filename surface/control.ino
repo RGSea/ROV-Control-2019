@@ -20,13 +20,6 @@ void calcMotorSpeeds() {
   motorSpeeds[INDEX_BR_H] = ( inPut * (Lx+Ly) ) / abs((Lx + Ly)) - (YAWRATE * RB) + (YAWRATE * LB) + 1;
   motorSpeeds[INDEX_BL_H] = ( inPut * (Ly-Lx) ) / abs((Lx + Ly)) + (YAWRATE * RB) - (YAWRATE * LB) +1;
 
-
-  // check speed range and apply power limiting factor to all motors
-  for(uint8_t i = 0; i < 8; i++) {
-    checkSpeedRange(&motorSpeeds[i]);
-    motorSpeeds[i] = motorSpeeds[i] * SPEED_LIMIT;
-  }
-
   // reverse motors if necessary
   if(REVERSE_FL_H) {motorSpeeds[INDEX_FL_H] = -1 * motorSpeeds[INDEX_FL_H];}
   if(REVERSE_FR_H) {motorSpeeds[INDEX_FR_H] = -1 * motorSpeeds[INDEX_FR_H];}
@@ -37,6 +30,27 @@ void calcMotorSpeeds() {
   if(REVERSE_BL_V) {motorSpeeds[INDEX_BL_V] = -1 * motorSpeeds[INDEX_BL_V];}
   if(REVERSE_BR_V) {motorSpeeds[INDEX_BR_V] = -1 * motorSpeeds[INDEX_BR_V];}
 
+  // get values from control station inputs, scale to 0-1 then multiply by max thrust percentage
+  double masterPowerFactor = SPEED_LIMIT * double(fetchPotValue(INDEX_MASTER_POWER)) / 1023;        // 
+  int altitudeTrim = ALTITUDE_TRIM * (1 - double(fetchPotValue(INDEX_ALTITUDE_TRIM)) / 1023);    // (1- used since scale is backwards)
+  int pitchTrim = PITCH_TRIM * double(fetchPotValue(INDEX_PITCH_TRIM)) / 1023;
+  int rollTrim = ROLL_TRIM * double(fetchPotValue(INDEX_ROLL_TRIM)) / 1023;
+
+  // apply vertical trims
+  motorSpeeds[INDEX_FL_V] = motorSpeeds[INDEX_FL_V] + altitudeTrim;
+  motorSpeeds[INDEX_FR_V] = motorSpeeds[INDEX_FR_V] + altitudeTrim;
+  motorSpeeds[INDEX_BL_V] = motorSpeeds[INDEX_BL_V] + altitudeTrim;
+  motorSpeeds[INDEX_BR_V] = motorSpeeds[INDEX_BR_V] + altitudeTrim;
+  
+  // apply master power factor
+  for(uint8_t i = 0; i < 8; i++) {
+    motorSpeeds[i] = int(motorSpeeds[i] * masterPowerFactor);
+  }
+ 
+  // check motor speeds are valid
+  for(uint8_t i = 0; i < 8; i++) {
+    checkSpeedRange(&motorSpeeds[i]);
+  }
 
 	// print motor speeds if debug
 	#ifdef DEBUG_VERTICAL_MOTOR_SPEEDS
@@ -64,8 +78,27 @@ void calcMotorSpeeds() {
     Serial.println(motorSpeeds[INDEX_BR_H]);
   #endif
 
+  #ifdef DEBUG_TRIM_VALUES
+    Serial.print(masterPowerFactor);
+    Serial.print("\t");
+    Serial.print(altitudeTrim);
+    Serial.print("\t");
+    Serial.print(pitchTrim);
+    Serial.print("\t");
+    Serial.print(rollTrim);
+    Serial.println();
+  #endif
+
 }
 
+
+uint16_t fetchPotValue(uint8_t index) {       //returns value in range 0-100%
+
+  uint16_t value = 0;
+  value = analogRead(index);
+  return value;
+  
+}
 
 void resetMotorSpeeds() {
 
