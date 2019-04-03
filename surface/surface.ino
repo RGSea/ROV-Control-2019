@@ -1,43 +1,49 @@
 // ROV Control 2019 - Surface
 // Version e = pi = 3
 
-// library includes
-#include "config.h"
-#include "menu.h"
-#include <XBOXUSB.h>
-#ifdef dobogusinclude
-#include <spi4teensy3.h>
-#endif
-#include <SPI.h>
+/*
+To do:
+- Implement control station controls
+- Extend serial comms buffer for electromagnets
+- Extend serial comms to receive temperature data
+*/
+
+
+// file includes
+#include "config.h"                                     // include config file
+#include <XBOXUSB.h>                                    // include XBOXUSB library
+#ifdef dobogusinclude                                   // catch for XBOXUSB special SPI requirement        
+  #include <spi4teensy3.h>                              // include special SPI
+#endif                                                  // end of special SPI catch
+#include <SPI.h>                                        // include SPI library
 
 // class object creation
-USB Usb;
-XBOXUSB Xbox(&Usb);
+USB Usb;                                                // create USB object
+XBOXUSB Xbox(&Usb);                                     // create XBOX controller object
 
 // global variables
-int motorSpeeds[8] = {0,0,0,0,0,0,0,0};
-int Lx, Ly, Rx, Ry, LT, RT;
-bool LB, RB;
-int loopNum = 0;
+uint16_t motorSpeeds[8] = {0, 0, 0, 0, 0, 0, 0, 0};     // motor speeds            
+int32_t Lx, Ly, Rx, Ry, LT, RT;                         // controller input values
+bool LB, RB;                                            // controller button states
+uint8_t loopNum = 0;                                    // loop number
+
 
 // initialisation
 void setup() {
 
-  // initialise serial comms
-  initComms();
+  // initialise other files
+  initComms();                                          // initialise comms code
+	initControlInput();                                   // initialise control input
 
-  // initialise additional code
-	initControlInput();
+  // run motor calibration
+  #ifdef CALIBRATE_MOTORS                               // check for motor calibration debug flag
+    calibrateMotors();                                  // run motor calibration
+  #endif                                                // end of motor calibration debug flag
 
-  // run motor calibration if specified by config
-  #ifdef CALIBRATE_MOTORS
-    calibrateMotors();
-  #endif
-
-  resetMotorSpeeds();
-  calcMotorSpeeds();
-  sendData(motorSpeeds);
-  delay(5000);
+  resetMotorSpeeds();                                   // set motor speeds to zero
+  calcMotorSpeeds();                                    // calculate motor speeds initially
+  sendData(motorSpeeds);                                // send initial motor speed data
+  delay(2000);                                          // pause 2s to allow system to come online
 
 }
 
@@ -46,15 +52,16 @@ void setup() {
 void loop() {
 
   // control code
-	fetchControlInput();
-	calcMotorSpeeds();
+	fetchControlInput();                                   // fetch control input
+	calcMotorSpeeds();                                     // calculate motor speeds
 
-  // send motorspeeds data
-  if((loopNum % 50) == 0){       // sends data every 50th loop (measured at approx 10-20. Hz (depends on intensity of calc.))
-    loopNum = 0;
-    sendData(motorSpeeds);
+  // send comms data every 50th loop
+  if((loopNum % 50) == 0){                               // check for loop number 50
+    loopNum = 0;                                         // reset loop number
+    sendData(motorSpeeds);                               // send comms data
   }
-  loopNum += 1;
+
+  loopNum += 1;                                          // increment loop number
 
 }
 

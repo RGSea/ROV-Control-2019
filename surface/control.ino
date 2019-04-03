@@ -1,12 +1,14 @@
-// control algorithm
+// control algorithm (trims in development)
 
+
+// control algorithm to calculate motor speeds
 void calcMotorSpeeds() {
 
 	// local variables for calculation
-	int altitude = RT - LT;
-	int pitch = Ry;
-	int roll = Rx;
-  int inPut = sqrt((Lx*Lx)+(Ly*Ly));
+	int altitude = RT - LT;                                                                                        // calculate altitude component, difference between triggers
+	int pitch = Ry;                                                                                                // calculate pitch component                                                                          
+	int roll = Rx;                                                                                                 // calculate roll component
+  int inPut = sqrt((Lx*Lx)+(Ly*Ly));                                                                             // calculate magnitude of translation input
 
 	// calculate vertical motor speeds
 	motorSpeeds[INDEX_FL_V] = altitude - pitch + roll;
@@ -30,11 +32,11 @@ void calcMotorSpeeds() {
   if(REVERSE_BL_V) {motorSpeeds[INDEX_BL_V] = -1 * motorSpeeds[INDEX_BL_V];}
   if(REVERSE_BR_V) {motorSpeeds[INDEX_BR_V] = -1 * motorSpeeds[INDEX_BR_V];}
 
-  // get values from control station inputs, scale to 0-1 then multiply by max thrust percentage
+  // get values from control station inputs, scale to 0-1
   double masterPowerFactor = SPEED_LIMIT * double(fetchPotValue(INDEX_MASTER_POWER)) / 1023;        // 
-  int altitudeTrim = ALTITUDE_TRIM * (1 - double(fetchPotValue(INDEX_ALTITUDE_TRIM)) / 1023);    // (1- used since scale is backwards)
-  int pitchTrim = PITCH_TRIM * double(fetchPotValue(INDEX_PITCH_TRIM)) / 1023;
-  int rollTrim = ROLL_TRIM * double(fetchPotValue(INDEX_ROLL_TRIM)) / 1023;
+  int altitudeTrim = ALTITUDE_TRIM * (1 - double(fetchPotValue(INDEX_ALTITUDE_TRIM)) / 1023);       // (1- used since scale is backwards)
+  //int pitchTrim = PITCH_TRIM * double(fetchPotValue(INDEX_PITCH_TRIM)) / 1023;
+  //int rollTrim = ROLL_TRIM * double(fetchPotValue(INDEX_ROLL_TRIM)) / 1023;
 
   // apply vertical trims
   motorSpeeds[INDEX_FL_V] = motorSpeeds[INDEX_FL_V] + altitudeTrim;
@@ -48,11 +50,11 @@ void calcMotorSpeeds() {
   }
  
   // check motor speeds are valid
-  for(uint8_t i = 0; i < 8; i++) {
-    checkSpeedRange(&motorSpeeds[i]);
+  for(uint8_t i = 0; i < 8; i++) {                        // loop through motor speeds
+    checkSpeedRange(&motorSpeeds[i]);                     // check speed is valid
   }
 
-	// print motor speeds if debug
+	// print motor speeds if debug flag raised
 	#ifdef DEBUG_VERTICAL_MOTOR_SPEEDS
     Serial.print("\n\n\n\n-----------------------\n");
 		Serial.print("\t");
@@ -92,41 +94,64 @@ void calcMotorSpeeds() {
 }
 
 
-uint16_t fetchPotValue(uint8_t index) {       //returns value in range 0-100%
+// fetch value of potentiometer
+uint16_t fetchPotValue(uint8_t pin) {                     //returns value in range 0-100%
 
-  uint16_t value = 0;
-  value = analogRead(index);
-  return value;
+  uint16_t value = 0;                                     // value of reading
+  value = analogRead(pin);                                // read value from pin
+  return value;                                           // return value
   
 }
 
+
+// reset motor speeds to zero
 void resetMotorSpeeds() {
 
-	motorSpeeds[INDEX_FL_H] = 0;
-	motorSpeeds[INDEX_FR_H] = 0;
-	motorSpeeds[INDEX_BL_H] = 0;
-	motorSpeeds[INDEX_BR_H] = 0;
-	motorSpeeds[INDEX_FL_V] = 0;
-	motorSpeeds[INDEX_FR_V] = 0;
-	motorSpeeds[INDEX_BL_V] = 0;
-	motorSpeeds[INDEX_BR_V] = 0;
+	motorSpeeds[INDEX_FL_H] = 0;                             // set front left horizontal motor speed to zero
+	motorSpeeds[INDEX_FR_H] = 0;                             // set front right horizontal motor speed to zero
+	motorSpeeds[INDEX_BL_H] = 0;                             // set back left horizontal motor speed to zero
+	motorSpeeds[INDEX_BR_H] = 0;                             // set back right horizontal motor speed to zero
+	motorSpeeds[INDEX_FL_V] = 0;                             // set front left vertical motor speed to zero
+	motorSpeeds[INDEX_FR_V] = 0;                             // set front right vertical motor speed to zero
+	motorSpeeds[INDEX_BL_V] = 0;                             // set back left vertical motor speed to zero
+	motorSpeeds[INDEX_BR_V] = 0;                             // set back right vertical motor speed to zero
 
 }
 
 
+// check motor speed is within valid range
 void checkSpeedRange(int *motorSpeed) {
-  if(*motorSpeed > 100) {
-    *motorSpeed = 100;
-  }
-  if(*motorSpeed < -100) {
-    *motorSpeed = -100;
-  }
+  
+  if(*motorSpeed > 100) {*motorSpeed = 100;}              // limit maximum for positive motor speed
+  if(*motorSpeed < -100) {*motorSpeed = -100;}            // limit maximum for negative motor speed
+
 }
 
 
 
 
-// motor calibration function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// motor calibration code  ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 void calibrateMotors() {
 

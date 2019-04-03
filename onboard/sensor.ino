@@ -1,3 +1,6 @@
+// temp sensor code in development
+
+
 #include "config.h"
 
 float getTempValue() {
@@ -6,12 +9,5 @@ float getTempValue() {
   return temp;
 }
 
-/*
-int16_t applyTempCalibration(int16_t temp) {
-
-  temp = temp;
-  return temp;
-}
-*/
 
 
