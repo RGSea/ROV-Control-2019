@@ -10,7 +10,7 @@
 */
 
 
-// trim & adjustments
+// trim & adjustments (in dev)
 #define ALTITUDE_TRIM   		10                            	// maximum altitude trim level as a percentage
 #define ROLL_TRIM       		10                            	// maximum roll trim level as a percentage
 #define PITCH_TRIM      		10                            	// maximum pitch trim level as a percentage

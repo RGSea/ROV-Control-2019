@@ -10,24 +10,27 @@ void initComms() {
 }
 
 
-// data formatter (output format: ixxxyyyzzzjjjkkk ... (initialiser character + 8 x 3 digit motor speeds in range 0-200))
-void formatData(int motorSpeeds[8], String *formattedData) {
+// data formatter (output format: ixxxyyyzzzjjjkkk{...}abcdefg (initialiser character + 8 x 3 digit motor speeds in range 0-200 + 6 magnet states))
+void formatData(int motorSpeeds[8], bool magnetStates[8], String *formattedData) {
 
 	// shift zero position of motor speeds up by 100
 	for(int i = 0; i < 8; i++) {													// loop through motor speeds
-		motorSpeeds[i] += 100;														// add 100 to each one so that range is 0-200 with 100 >> 0
+		motorSpeeds[i] += 100;														// add 100 to each one so that range is 0-200 with 100 representing neutral 0 speed
 	}
 
 	// format data
 	*formattedData = "i";															// start formatted data buffer with initialiser character
-	for(int i = 0; i < 8; i++) {													// loop through motor motor speeds
-		*formattedData += intToString(motorSpeeds[i]);								// convert each motor speed to a string and append to formatted data buffer
+	for(uint8_t i = 0; i < 8; i++) {												// loop through motor speeds
+		*formattedData += intToString(motorSpeeds[i]);								// convert each motor speed to a 3 digit string and append to formatted data buffer
+	}
+	for(uint8_t i = 0; i < 6; i++) {												// loop through magnet states
+		*formattedData += magnetStates[i];											// append magnet states to data buffer as single digits
 	}
 
 }
 
 
-// integer to string converter for motor speeds
+// integer to string converter for motor speeds, makes int into 3 digit string
 String intToString(int val) {
 
 	String zero = "0";																// zero string for empty digits
@@ -45,12 +48,12 @@ String intToString(int val) {
 
 
 // send serial data
-void sendData(int motorSpeeds[8]) {
+void sendData(int motorSpeeds[8], bool magnetStates[6]) {
 
-	String formattedData = "i000000000000000000000000";								// blank data buffer
+	String formattedData = "i100100100100100100100100000000";						// blank data buffer
 	
 	// format and send data
-	formatData(motorSpeeds, &formattedData);										// format motor speeds data
+	formatData(motorSpeeds, magnetStates, &formattedData);							// format motor speeds data, pass in data buffer variable by reference
 	Serial1.print(formattedData);													// send formatted data to onboard through serial port 1
 	Serial1.print('\n');															// send newline terminator character to onboard through serial port 1
 

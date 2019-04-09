@@ -18,14 +18,15 @@ To do:
 #include <SPI.h>                                        // include SPI library
 
 // class object creation
-USB Usb;                                                // create USB object
+USB Usb;                                                // create USB object to allow polling of controller
 XBOXUSB Xbox(&Usb);                                     // create XBOX controller object
 
 // global variables
-uint16_t motorSpeeds[8] = {0, 0, 0, 0, 0, 0, 0, 0};     // motor speeds            
-int32_t Lx, Ly, Rx, Ry, LT, RT;                         // controller input values
+uint16_t motorSpeeds[8] = {0, 0, 0, 0, 0, 0, 0, 0};     // motor speeds, array index corresponds to motor index           
+int32_t Lx, Ly, Rx, Ry, LT, RT;                         // controller axis input values
 bool LB, RB;                                            // controller button states
-uint8_t loopNum = 0;                                    // loop number
+uint8_t loopNum = 0;                                    // main loop number
+bool magnetStates[6] = {0, 0, 0, 0, 0, 0};              // electromagnet states (controls A0-A5 in order)
 
 
 // initialisation
@@ -41,8 +42,8 @@ void setup() {
   #endif                                                // end of motor calibration debug flag
 
   resetMotorSpeeds();                                   // set motor speeds to zero
-  calcMotorSpeeds();                                    // calculate motor speeds initially
-  sendData(motorSpeeds);                                // send initial motor speed data
+  calcMotorSpeeds();                                    // calculate motor speeds for initialisation (all zero)
+  sendData(motorSpeeds, magnetStates);                  // send initial motor speed data (all zero)
   delay(2000);                                          // pause 2s to allow system to come online
 
 }
@@ -52,15 +53,14 @@ void setup() {
 void loop() {
 
   // control code
-	fetchControlInput();                                   // fetch control input
+	fetchControlInput();                                   // fetch control input from XBOX controller
 	calcMotorSpeeds();                                     // calculate motor speeds
 
   // send comms data every 50th loop
   if((loopNum % 50) == 0){                               // check for loop number 50
-    loopNum = 0;                                         // reset loop number
-    sendData(motorSpeeds);                               // send comms data
+    loopNum = 0;                                         // reset loop number every 50th loop
+    sendData(motorSpeeds, magnetStates);                 // send comms data every 50th loop
   }
-
   loopNum += 1;                                          // increment loop number
 
 }

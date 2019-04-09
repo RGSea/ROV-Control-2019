@@ -53,14 +53,20 @@ void formatData() {
 
 	dataIn = dataIn.substring(1);													// crop initialiser bit from string
 	uint16_t index;																	// define temporary index variable
-	
+  
 	// read in new data to motor speeds array
 	for(uint8_t i = 0; i < 8; i++) {												// loop through input data substrings
-		
 		index = i * 3;																// detemine index of input string to read from
 		motorSpeeds[i] = dataIn.substring(index, index + 3).toInt() - 100;			// read substring into motor speeds, convert to integer in range -100 to 100
-
 	}
+
+  for(uint8_t i = 0; i < 6; i++) {
+    magnetStates[i] = dataIn.charAt(i + 24) - '0';
+    Serial.print(magnetStates[i]);
+  }
+  Serial.println();
+
+
 
 	#ifdef DEBUG_MOTOR_SPEEDS														// check for debug flag
 		for(uint8_t i = 0; i < 8; i++) {											// loop through motor speeds

@@ -32,17 +32,11 @@ void calcMotorSpeeds() {
   if(REVERSE_BL_V) {motorSpeeds[INDEX_BL_V] = -1 * motorSpeeds[INDEX_BL_V];}
   if(REVERSE_BR_V) {motorSpeeds[INDEX_BR_V] = -1 * motorSpeeds[INDEX_BR_V];}
 
-  // get values from control station inputs, scale to 0-1
-  double masterPowerFactor = SPEED_LIMIT * double(fetchPotValue(INDEX_MASTER_POWER)) / 1023;        // 
-  int altitudeTrim = ALTITUDE_TRIM * (1 - double(fetchPotValue(INDEX_ALTITUDE_TRIM)) / 1023);       // (1- used since scale is backwards)
+  // get values from control station inputs, scale values to range 0-1
+  double masterPowerFactor = SPEED_LIMIT * double(fetchPotValue(INDEX_MASTER_POWER)) / 1023;        // get master power factor from dial, add additional software limit
+  // /int altitudeTrim = ALTITUDE_TRIM * (1 - double(fetchPotValue(INDEX_ALTITUDE_TRIM)) / 1023);       // (1- used since scale is backwards)
   //int pitchTrim = PITCH_TRIM * double(fetchPotValue(INDEX_PITCH_TRIM)) / 1023;
   //int rollTrim = ROLL_TRIM * double(fetchPotValue(INDEX_ROLL_TRIM)) / 1023;
-
-  // apply vertical trims
-  motorSpeeds[INDEX_FL_V] = motorSpeeds[INDEX_FL_V] + altitudeTrim;
-  motorSpeeds[INDEX_FR_V] = motorSpeeds[INDEX_FR_V] + altitudeTrim;
-  motorSpeeds[INDEX_BL_V] = motorSpeeds[INDEX_BL_V] + altitudeTrim;
-  motorSpeeds[INDEX_BR_V] = motorSpeeds[INDEX_BR_V] + altitudeTrim;
   
   // apply master power factor
   for(uint8_t i = 0; i < 8; i++) {
@@ -94,7 +88,7 @@ void calcMotorSpeeds() {
 }
 
 
-// fetch value of potentiometer
+// fetch value of potentiometer from control station
 uint16_t fetchPotValue(uint8_t pin) {                     //returns value in range 0-100%
 
   uint16_t value = 0;                                     // value of reading
@@ -152,7 +146,16 @@ void checkSpeedRange(int *motorSpeed) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// motor calibration code  ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-
+/* Use with serial monitor by uncommenting special flag in config file
+ * To account for incorrect wiring of the motors to ESCs, instead of changing the pins on the onboard code to be correct
+ * it is much easier to just re-arrange the serial data buffer (change the order in which motor speeds are sent)
+ * 
+ * For example: if motor 6 is connected to the ESC for motor 8, by sending the speed for motor 6 in the position of the speed for motor 8
+ * in the serial comms buffer motor 6 will drive at the correct speed
+ *
+ * Running this calibration allows the correct index numbers for the motor speeds to be determined so that
+ * each speed is sent in the correct order in the serial data buffer
+*/
 void calibrateMotors() {
 
   // start
@@ -161,7 +164,7 @@ void calibrateMotors() {
   int8_t motorDirections[8] = {0,0,0,0,0,0,0,0};
 
   resetMotorSpeeds();
-  sendData(motorSpeeds);
+  sendData(motorSpeeds, magnetStates);
   delay(2000);
 
   // run motor index checks
@@ -245,7 +248,7 @@ uint8_t findMotorIndex() {
   
         // set correct motor on and send speed to onboard
         motorSpeeds[i] = motorTestSpeed;
-        sendData(motorSpeeds);
+        sendData(motorSpeeds, magnetStates);
   
         //wait for user input
         Serial.println("Is correct motor turning? y/n");

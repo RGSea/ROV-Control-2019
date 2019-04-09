@@ -58,7 +58,7 @@ int mapAxis(int axis) {
 
 
 // check if axis is in deadzone
-void deadzoneCheck(int *axis) {
+void deadzoneCheck(int32_t   *axis) {
   
   if(*axis <= DEADZONE && *axis >= -DEADZONE) {                     // check if axis is within deadzone
     *axis = 0;                                                      // set axis to zero if within deazone
